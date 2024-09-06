@@ -1,0 +1,10 @@
+{
+    "dataRootProof": [],
+    "leafProof": [],
+    "rangeHash": "0x8654362179978763f0625af8561db27942d83b912f4f8f479b6604464e510701",
+    "dataRootIndex": 130,
+    "blobRoot": "0xd256e4266ad7c0df124c8e0e8ba5a064c775f5fe3a9efded23ed78bfb97f352c",
+    "bridgeRoot": "0x77f19d35be821627b8c47259c1d3729b9e9bd6118b9a32884e27f26fe6c4efd7",
+    "leaf": "0x77f19d35be821627b8c47259c1d3729b9e9bd6118b9a32884e27f26fe6c4efd7",
+    "leafIndex": 0
+}
