@@ -8,12 +8,63 @@ import { getAddress, parseGwei } from "viem";
 import fs from "fs";
 import { encodeAbiParameters } from 'viem'
 
+const merkleProofInputABI = [
+  {
+      "name": "input",
+      "type": "tuple",
+      "internalType": "struct IAvailBridge.MerkleProofInput",
+      "components": [
+          {
+              "name": "dataRootProof",
+              "type": "bytes32[]",
+              "internalType": "bytes32[]"
+          },
+          {
+              "name": "leafProof",
+              "type": "bytes32[]",
+              "internalType": "bytes32[]"
+          },
+          {
+              "name": "rangeHash",
+              "type": "bytes32",
+              "internalType": "bytes32"
+          },
+          {
+              "name": "dataRootIndex",
+              "type": "uint256",
+              "internalType": "uint256"
+          },
+          {
+              "name": "blobRoot",
+              "type": "bytes32",
+              "internalType": "bytes32"
+          },
+          {
+              "name": "bridgeRoot",
+              "type": "bytes32",
+              "internalType": "bytes32"
+          },
+          {
+              "name": "leaf",
+              "type": "bytes32",
+              "internalType": "bytes32"
+          },
+          {
+              "name": "leafIndex",
+              "type": "uint256",
+              "internalType": "uint256"
+          }
+      ]
+  }
+]
+
 describe("Attestation", async function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
   async function deployAttestationFixture() {
-    const attestation = await hre.viem.deployContract("Attestation");
+    const bridge = await hre.viem.deployContract("AvailBridgeMock");
+    const attestation = await hre.viem.deployContract("Attestation", [bridge.address]);
 
     return {
       attestation
@@ -67,48 +118,7 @@ describe("Attestation", async function () {
       const data = fs.readFileSync("data.json", "utf8");
       const json = JSON.parse(data);
 
-      const encoded = encodeAbiParameters([
-        {
-          "internalType": "bytes32[]",
-          "name": "dataRootProof",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "bytes32[]",
-          "name": "leafProof",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "rangeHash",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "dataRootIndex",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "blobRoot",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "bridgeRoot",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "leaf",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "leafIndex",
-          "type": "uint256"
-        }
-      ], Object.values(json));
+      const encoded = encodeAbiParameters(merkleProofInputABI, [json]);
       await attestation.simulate.attestUntyped([encoded]);
       await attestation.write.attestUntyped([encoded]);
     });
@@ -119,49 +129,7 @@ describe("Attestation", async function () {
 
       const data = fs.readFileSync("data.json", "utf8");
       const json = JSON.parse(data);
-
-      const encoded = encodeAbiParameters([
-        {
-          "internalType": "bytes32[]",
-          "name": "dataRootProof",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "bytes32[]",
-          "name": "leafProof",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "rangeHash",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "dataRootIndex",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "blobRoot",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "bridgeRoot",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "leaf",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "leafIndex",
-          "type": "uint256"
-        }
-      ], Object.values(json));
+      const encoded = encodeAbiParameters(merkleProofInputABI, [json]);
       await attestation.simulate.attestUntypedCalldata([encoded]);
       await attestation.write.attestUntypedCalldata([encoded]);
     });
@@ -196,48 +164,7 @@ describe("Attestation", async function () {
       const data = fs.readFileSync("data2.json", "utf8");
       const json = JSON.parse(data);
 
-      const encoded = encodeAbiParameters([
-        {
-          "internalType": "bytes32[]",
-          "name": "dataRootProof",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "bytes32[]",
-          "name": "leafProof",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "rangeHash",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "dataRootIndex",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "blobRoot",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "bridgeRoot",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "leaf",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "leafIndex",
-          "type": "uint256"
-        }
-      ], Object.values(json));
+      const encoded = encodeAbiParameters(merkleProofInputABI, [json]);
       await attestation.simulate.attestUntyped([encoded]);
       await attestation.write.attestUntyped([encoded]);
     });
@@ -250,48 +177,7 @@ describe("Attestation", async function () {
       const data = fs.readFileSync("data2.json", "utf8");
       const json = JSON.parse(data);
 
-      const encoded = encodeAbiParameters([
-        {
-          "internalType": "bytes32[]",
-          "name": "dataRootProof",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "bytes32[]",
-          "name": "leafProof",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "rangeHash",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "dataRootIndex",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "blobRoot",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "bridgeRoot",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "leaf",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "leafIndex",
-          "type": "uint256"
-        }
-      ], Object.values(json));
+      const encoded = encodeAbiParameters(merkleProofInputABI, [json]);
       await attestation.simulate.attestUntypedCalldata([encoded]);
       await attestation.write.attestUntypedCalldata([encoded]);
     });

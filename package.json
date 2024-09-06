@@ -16,7 +16,11 @@
     "@nomicfoundation/hardhat-foundry": "^1.1.2",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.10",
     "hardhat": "^2.22.10",
     "hardhat-gas-reporter": "^2.2.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }

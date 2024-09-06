@@ -2,11 +2,14 @@
 src = "src"
 out = "out"
 libs = ["lib"]
-version = "0.8.26"
+version = "0.8.24"
 evm_version = "cancun"
 optimizer = true
 optimizer_runs = 999999
 via_ir = true
 fs_permissions = [{ access = "read", path = "./"}]
+
+[rpc_endpoints]
+mainnet = "https://virtual.mainnet.rpc.tenderly.co/${VIRTUAL_TESTNET_ID}"
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

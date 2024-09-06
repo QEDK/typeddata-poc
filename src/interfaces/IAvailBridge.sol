@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
-pragma solidity ^0.8.26;
+pragma solidity ^0.8.24;
+
+import {IVectorx} from "./IVectorx.sol";
 
 interface IAvailBridge {
     struct Message {
@@ -59,9 +61,9 @@ interface IAvailBridge {
     error UnlockFailed();
     error WithdrawFailed();
 
-    function vectorx() external view returns (address);
+    function vectorx() external view returns (IVectorx);
     function setPaused(bool status) external;
-    function updateVectorx(address newVectorx) external;
+    function updateVectorx(IVectorx newVectorx) external;
     function updateTokens(bytes32[] calldata assetIds, address[] calldata tokenAddresses) external;
     function updateFeePerByte(uint256 newFeePerByte) external;
     function updateFeeRecipient(address newFeeRecipient) external;
